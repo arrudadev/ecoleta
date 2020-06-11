@@ -27,9 +27,10 @@ module.exports = {
 		'import-helpers',
 	],
 	rules: {
-		indent: ['error', 'tab'],
+		'indent': ['error', 'tab'],
 		'no-tabs': 'off',
 		'comma-spacing': 2,
+		'linebreak-style': 'off',
 		'no-multiple-empty-lines': [2, { max: 1 }],
 		'no-trailing-spaces': 2,
 		'import-helpers/order-imports': [
@@ -48,7 +49,7 @@ module.exports = {
 		'import/extensions': 'off',
 		'import/no-unresolved': 'off',
 		'class-methods-use-this': 'off',
-		camelcase: 'off',
+		'camelcase': 'off',
 		'@typescript-eslint/camelcase': 'off',
 		'object-curly-newline': 'off',
 		'react/jsx-filename-extension': 'off',

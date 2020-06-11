@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "start": "lerna run start",    
-    "lint": "eslint packages --ext ts,tsx",    
+    "lint": "eslint packages --ext ts,tsx",
     "bootstrap": "lerna bootstrap"
   },
   "devDependencies": {

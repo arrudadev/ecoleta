@@ -1,0 +1,22 @@
+{
+  "name": "backend",
+  "version": "0.0.0",
+  "author": "Alexandre <alexandre@unicorp.com.br>",
+  "license": "MIT",
+  "main": "lib/backend.js",
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1",
+    "start": "nodemon src/server.ts"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.6",
+    "@types/express": "^4.17.6",
+    "nodemon": "^2.0.4",
+    "sucrase": "^3.15.0"
+  }
+}
