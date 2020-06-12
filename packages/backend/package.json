@@ -6,7 +6,8 @@
   "main": "src/server.js",
   "scripts": {
     "start": "nodemon src/server.ts",
-    "migrate:latest": "knex migrate:latest --knexfile knexfile.ts migrate:latest"
+    "migrate:latest": "knex --knexfile knexfile.ts migrate:latest",
+    "seed:run": "knex --knexfile knexfile.ts seed:run"
   },
   "dependencies": {
     "cors": "^2.8.5",
