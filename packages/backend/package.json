@@ -3,15 +3,17 @@
   "version": "0.0.0",
   "author": "Alexandre <alexandre@unicorp.com.br>",
   "license": "MIT",
-  "main": "lib/backend.js",
+  "main": "src/server.js",
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1",
-    "start": "nodemon src/server.ts"
+    "start": "nodemon src/server.ts",
+    "migrate:latest": "knex migrate:latest --knexfile knexfile.ts migrate:latest"
   },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "knex": "^0.21.1",
+    "sqlite3": "^4.2.0"    
   },
   "devDependencies": {
     "@types/cors": "^2.8.6",

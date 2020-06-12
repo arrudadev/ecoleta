@@ -3,13 +3,14 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 
+import routes from './routes';
+
 dotenv.config();
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
-
-app.use('/', (request, response) => response.json({ teste: 'teste' }));
+app.use(routes);
 
 app.listen(process.env.SERVER_PORT);
