@@ -51,22 +51,22 @@ class PointsController {
 				uf,
 			};
 
-			const insertedPointId = await knex.transaction(async (trx) => {
-				const insertedIds = await trx('points').insert(point);
+			const trx = await knex.transaction();
 
-				const point_id = insertedIds[0];
+			const insertedIds = await trx('points').insert(point);
 
-				const pointItems = items.map((item_id: number) => ({
-					point_id,
-					item_id,
-				}));
+			const point_id = insertedIds[0];
 
-				await trx('point_items').insert(pointItems);
+			const pointItems = items.map((item_id: number) => ({
+				point_id,
+				item_id,
+			}));
 
-				return point_id;
-			});
+			await trx('point_items').insert(pointItems);
 
-			return response.json({ id: insertedPointId, ...point });
+			await trx.commit();
+
+			return response.json({ id: point_id, ...point });
 		} catch (error) {
 			return response.status(400).json({ error });
 		}
