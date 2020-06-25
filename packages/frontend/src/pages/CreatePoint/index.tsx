@@ -1,130 +1,179 @@
-import React from 'react';
+import React, { useEffect, useState, ChangeEvent } from 'react';
 import { FiArrowLeft } from 'react-icons/fi';
 import { Map, TileLayer, Marker } from 'react-leaflet';
 import { Link } from 'react-router-dom';
 
+import axios from 'axios';
+
 import './styles.css';
 
 import logo from '../../assets/logo.svg';
+import api from '../../services/api';
 
-const CreatePoint = () => (
-	<div id="page-create-point">
-		<header>
-			<img src={logo} alt="Ecoleta" />
+interface Item {
+	id: number;
+	title: string;
+	image_url: string;
+}
 
-			<Link to="/">
-				<FiArrowLeft />
+interface IBGEUFResponse {
+	sigla: string;
+}
+
+interface IBGECityResponse {
+	nome: string;
+}
+
+const CreatePoint = () => {
+	const [items, setItems] = useState<Item[]>([]);
+	const [ufs, setUfs] = useState<string[]>([]);
+	const [citys, setCitys] = useState<string[]>([]);
+
+	const [selectedUF, setSelectedUF] = useState('0');
+	const [selectedCity, setSelectedCity] = useState('0');
+
+	useEffect(() => {
+		api.get('items').then((response) => {
+			setItems(response.data);
+		});
+	}, []);
+
+	useEffect(() => {
+		axios.get<IBGEUFResponse[]>('https://servicodados.ibge.gov.br/api/v1/localidades/estados').then((response) => {
+			const ufInitials = response.data.map((uf) => uf.sigla);
+
+			setUfs(ufInitials);
+		});
+	}, []);
+
+	useEffect(() => {
+		if (selectedUF !== '0') {
+			axios.get<IBGECityResponse[]>(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${selectedUF}/municipios`)
+				.then((response) => {
+					const cityNames = response.data.map((uf) => uf.nome);
+
+					setCitys(cityNames);
+				});
+		}
+	}, [selectedUF]);
+
+	function handleSelectUF(event: ChangeEvent<HTMLSelectElement>) {
+		const uf = event.target.value;
+		setSelectedUF(uf);
+	}
+
+	function handleSelectCity(event: ChangeEvent<HTMLSelectElement>) {
+		const city = event.target.value;
+		setSelectedCity(city);
+	}
+
+	return (
+		<div id="page-create-point">
+			<header>
+				<img src={logo} alt="Ecoleta" />
+
+				<Link to="/">
+					<FiArrowLeft />
                 Voltar para Home
-			</Link>
-		</header>
+				</Link>
+			</header>
 
-		<form>
-			<h1>Cadastro do <br /> Ponto de Coleta</h1>
+			<form>
+				<h1>Cadastro do <br /> Ponto de Coleta</h1>
 
-			<fieldset>
-				<legend>
-					<h2>Dados</h2>
-				</legend>
+				<fieldset>
+					<legend>
+						<h2>Dados</h2>
+					</legend>
 
-				<div className="field">
-					<label htmlFor="name">Nome da entidade</label>
-					<input
-						type="text"
-						name="name"
-						id="name"
-					/>
-				</div>
-				<div className="field-group">
 					<div className="field">
-						<label htmlFor="email">E-mail</label>
+						<label htmlFor="name">Nome da entidade</label>
 						<input
 							type="text"
-							name="email"
-							id="email"
+							name="name"
+							id="name"
 						/>
 					</div>
+					<div className="field-group">
+						<div className="field">
+							<label htmlFor="email">E-mail</label>
+							<input
+								type="text"
+								name="email"
+								id="email"
+							/>
+						</div>
 
-					<div className="field">
-						<label htmlFor="whatsapp">Whatsapp</label>
-						<input
-							type="text"
-							name="whatsapp"
-							id="whatsapp"
+						<div className="field">
+							<label htmlFor="whatsapp">Whatsapp</label>
+							<input
+								type="text"
+								name="whatsapp"
+								id="whatsapp"
+							/>
+						</div>
+					</div>
+				</fieldset>
+
+				<fieldset>
+					<legend>
+						<h2>Endereço</h2>
+						<span>Selecione o endereço no mapa</span>
+					</legend>
+
+					<Map center={[-23.6450973, -46.7858642]} zoom={15}>
+						<TileLayer
+							attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+							url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 						/>
+						<Marker position={[-23.6450973, -46.7858642]} />
+					</Map>
+
+					<div className="field-group">
+						<div className="field">
+							<label htmlFor="uf">Estado (UF)</label>
+							<select name="uf" id="uf" value={selectedUF} onChange={handleSelectUF}>
+								<option value="0">Selecione uma UF</option>
+								{ ufs.map((uf) => (
+									<option key={uf} value={uf}>{uf}</option>
+								))}
+							</select>
+						</div>
+
+						<div className="field">
+							<label htmlFor="city">Cidade</label>
+							<select name="city" id="city" value={selectedCity} onChange={handleSelectCity}>
+								<option value="0">Selecione uma cidade</option>
+								{ citys.map((city) => (
+									<option key={city} value={city}>{city}</option>
+								))}
+							</select>
+						</div>
 					</div>
-				</div>
-			</fieldset>
+				</fieldset>
 
-			<fieldset>
-				<legend>
-					<h2>Endereço</h2>
-					<span>Selecione o endereço no mapa</span>
-				</legend>
+				<fieldset>
+					<legend>
+						<h2>Ítems de Coleta</h2>
+						<span>Selecione um ou mais ítems abaixo</span>
+					</legend>
 
-				<Map center={[-23.6450973, -46.7858642]} zoom={15}>
-					<TileLayer
-						attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-						url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-					/>
-					<Marker position={[-23.6450973, -46.7858642]} />
-				</Map>
+					<ul className="items-grid">
+						{items.map((item) => (
+							<li key={item.id}>
+								<img src={item.image_url} alt={item.title} />
+								<span>{item.title}</span>
+							</li>
+						))}
+					</ul>
+				</fieldset>
 
-				<div className="field-group">
-					<div className="field">
-						<label htmlFor="uf">Estado (UF)</label>
-						<select name="uf" id="uf">
-							<option value="0">Selecione uma UF</option>
-						</select>
-					</div>
-
-					<div className="field">
-						<label htmlFor="city">Cidade</label>
-						<select name="city" id="city">
-							<option value="0">Selecione uma cidade</option>
-						</select>
-					</div>
-				</div>
-			</fieldset>
-
-			<fieldset>
-				<legend>
-					<h2>Ítems de Coleta</h2>
-					<span>Selecione um ou mais ítems abaixo</span>
-				</legend>
-
-				<ul className="items-grid">
-					<li className="selected">
-						<img src="http://localhost:3333/uploads/oleo.svg" alt="Óleo de Cozinha" />
-						<span>Óleo de Cozinha</span>
-					</li>
-					<li className="selected">
-						<img src="http://localhost:3333/uploads/oleo.svg" alt="Óleo de Cozinha" />
-						<span>Óleo de Cozinha</span>
-					</li>
-					<li className="selected">
-						<img src="http://localhost:3333/uploads/oleo.svg" alt="Óleo de Cozinha" />
-						<span>Óleo de Cozinha</span>
-					</li>
-					<li className="selected">
-						<img src="http://localhost:3333/uploads/oleo.svg" alt="Óleo de Cozinha" />
-						<span>Óleo de Cozinha</span>
-					</li>
-					<li className="selected">
-						<img src="http://localhost:3333/uploads/oleo.svg" alt="Óleo de Cozinha" />
-						<span>Óleo de Cozinha</span>
-					</li>
-					<li className="selected">
-						<img src="http://localhost:3333/uploads/oleo.svg" alt="Óleo de Cozinha" />
-						<span>Óleo de Cozinha</span>
-					</li>
-				</ul>
-			</fieldset>
-
-			<button type="submit">
+				<button type="submit">
                 Cadastra Ponto de Coleta
-			</button>
-		</form>
-	</div>
-);
+				</button>
+			</form>
+		</div>
+	);
+};
 
 export default CreatePoint;
