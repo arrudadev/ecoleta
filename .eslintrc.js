@@ -61,6 +61,8 @@ module.exports = {
 		'react/react-in-jsx-scope': 'off',
 		'lines-between-class-members': 'off',
 		'import/no-extraneous-dependencies': 'off',
-		'jsx-a11y/label-has-associated-control': 'off'
+		'jsx-a11y/label-has-associated-control': 'off',
+		'jsx-a11y/click-events-have-key-events': 'off',
+		'jsx-a11y/no-noninteractive-element-interactions': 'off'
 	},
 };
