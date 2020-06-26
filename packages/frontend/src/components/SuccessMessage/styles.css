@@ -1,0 +1,23 @@
+.success-message-content {    
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+    z-index: 1000;
+    background: #0E0A14;
+    opacity: 0.95;
+}
+
+.success-message-content > .success-icon {
+    position: absolute;
+    left: 49.5%;    
+    top: 48%;   
+}
+
+.success-message-content > .success-message {    
+    position: absolute;
+    left: 43.5%;    
+    top: 55%; 
+    color: #F0F0F5;   
+}

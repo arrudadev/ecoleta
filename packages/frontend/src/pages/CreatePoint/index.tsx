@@ -1,7 +1,7 @@
 import React, { useEffect, useState, ChangeEvent, FormEvent } from 'react';
 import { FiArrowLeft } from 'react-icons/fi';
 import { Map, TileLayer, Marker } from 'react-leaflet';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import axios from 'axios';
 import { LeafletMouseEvent } from 'leaflet';
@@ -9,6 +9,7 @@ import { LeafletMouseEvent } from 'leaflet';
 import './styles.css';
 
 import logo from '../../assets/logo.svg';
+import SuccessMessage from '../../components/SuccessMessage';
 import api from '../../services/api';
 
 interface Item {
@@ -37,11 +38,15 @@ const CreatePoint = () => {
 	const [selectedPosition, setSelectedPosition] = useState<[number, number]>([0, 0]);
 	const [selectedItems, setSelectedItems] = useState<number[]>([]);
 
+	const [successMessageVisibility, setSuccessMessageVisibility] = useState(false);
+
 	const [formData, setFormData] = useState({
 		name: '',
 		email: '',
 		whatsapp: '',
 	});
+
+	const history = useHistory();
 
 	useEffect(() => {
 		api.get('items').then((response) => {
@@ -127,7 +132,12 @@ const CreatePoint = () => {
 		};
 
 		await api.post('points', data);
-		alert('Ponto de Coleta Criado com Sucesso!');
+
+		setSuccessMessageVisibility(true);
+
+		setTimeout(() => {
+			history.push('/');
+		}, 2000);
 	}
 
 	return (
@@ -242,6 +252,7 @@ const CreatePoint = () => {
                 Cadastra Ponto de Coleta
 				</button>
 			</form>
+			<SuccessMessage message="Cadastro concluído!" visible={successMessageVisibility} />
 		</div>
 	);
 };
