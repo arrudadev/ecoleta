@@ -1,0 +1,5 @@
+node_modules
+*.sqlite
+
+# gnoring all files uploaded by the user, minus the image files of the collection items
+uploads/*
