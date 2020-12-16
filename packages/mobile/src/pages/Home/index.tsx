@@ -4,6 +4,7 @@ import { View, ImageBackground, Text, Image, TextInput, KeyboardAvoidingView, Pl
 import { RectButton } from 'react-native-gesture-handler';
 
 import { Feather as Icon } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 import HomeBackground from '../../assets/home-background.png';
 import Logo from '../../assets/logo.png';
@@ -13,8 +14,14 @@ const Home: React.FC = () => {
 	const [uf, setUf] = useState('');
 	const [city, setCity] = useState('');
 
-	// eslint-disable-next-line
-	function handleNavigateToPoints() {}
+	const navigation = useNavigation();
+
+	function handleNavigateToPoints() {
+		navigation.navigate('Points', {
+			uf,
+			city,
+		});
+	}
 
 	return (
 		<KeyboardAvoidingView
