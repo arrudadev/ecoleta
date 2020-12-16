@@ -86,8 +86,9 @@ const Points: React.FC = () => {
 		navigation.goBack();
 	}
 
-	// eslint-disable-next-line
-	function handleNavigateToDetail(id: number) {}
+	function handleNavigateToDetail(id: number) {
+		navigation.navigate('Detail', { point_id: id });
+	}
 
 	function handleSelectItem(id: number) {
 		const alreadySelected = selectedItems.findIndex((item) => item === id);
