@@ -7,7 +7,7 @@
 </h4>
 
 <p align="center">
-  <a href="#rocket-technologies">Technologies</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-technologies">Technologies</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-overview">Overview</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-getting-started">Getting started</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-contributing">Contributing</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
@@ -43,19 +43,19 @@
 <br>
 
 <p align="center">
-  <img alt="Ecoleta" src=".github/assets/mobile-home-page.jpg" width="100%">
+  <img alt="Ecoleta" src=".github/assets/mobile-home-page.png" width="100%">
 </p>
 
 <br>
 
 <p align="center">
-  <img alt="Ecoleta" src=".github/assets/mobile-points-page.jpg" width="100%">
+  <img alt="Ecoleta" src=".github/assets/mobile-points-page.png" width="100%">
 </p>
 
 <br>
 
 <p align="center">
-  <img alt="Ecoleta" src=".github/assets/mobile-detail-page.jpg" width="100%">
+  <img alt="Ecoleta" src=".github/assets/mobile-detail-page.png" width="100%">
 </p>
 
 ## 🚀 Technologies
@@ -188,8 +188,6 @@ yarn start
 Than you can open the app in your cell phone using the Expo client app for IOS and Android, see:
 
 <a href="https://docs.expo.io/get-started/installation/#2-expo-client-app-for-ios-and">Expo Documentation</a>
-
-<br>
 
 ## 🤔 Contributing
 
